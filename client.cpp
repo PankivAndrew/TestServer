@@ -4,10 +4,12 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <arpa/inet.h>
+#include <zconf.h>
+
 int main(int argc, char*argv[]) {
     struct sockaddr_in server ;
-    char buf[2048] = "ls";
-    struct addrinfo addr; char host_buf[NI_MAXHOST];
+    char buf[2048] = "ls\n";
+    char ls[2048] = "ls\n";
     int sd = socket (AF_INET,SOCK_STREAM,0);
     if( sd == -1 ) {
         sd = errno;
@@ -22,18 +24,25 @@ int main(int argc, char*argv[]) {
         res = errno;
         printf("Error: %a\n",strerror(res));
     }
+    int rcv;
     for (;;) {
-        int snd = send(sd, buf, strlen (buf ), 0 );
+        rcv = read(sd,buf,sizeof(buf));
+        printf ("%s",buf);
+
+        if (rcv == -1) {
+            rcv = errno;
+            printf("Error: %s\n",strerror(rcv));
+            exit(EXIT_FAILURE);
+        }
+        fflush(stdout);
+        sleep(1);
+        int snd = write(sd, ls, sizeof (ls ));
         if(snd == -1){
             snd = errno;
             printf("Error: %s\n",strerror(snd));
+            exit(EXIT_FAILURE);
         }
-        int rcv = recv(sd,buf,strlen(buf),0);
-        if(rcv == -1){
-            rcv = errno;
-            printf("Error: %s\n",strerror(rcv));
-        }
-        printf ("%s\n",buf);
+
     }
     return 0;
 }

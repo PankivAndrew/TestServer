@@ -2,9 +2,13 @@
 #include <zconf.h>
 #include <cstring>
 #include <sys/wait.h>
+#include <chrono>
+#include <thread>
+
 int main(int argc,char *argv[]) {
     for(int i = 0; i < atoi(argv[1]);i++){
         pid_t PID;
+        std::this_thread::sleep_for(std::chrono::nanoseconds(1000));
         switch(PID = fork()) {
             case -1: {
                 int err = errno;
