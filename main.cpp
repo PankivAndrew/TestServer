@@ -11,7 +11,7 @@ int main(int argc,char *argv[]) {
                 printf("Error: %s\n", strerror(err));
             }
             case 0: {
-                execv("client", &argv[2]);
+                execv("client", &argv[1]);
             }
             default: {
                 printf("New client is created:%i\n", i + 1);
