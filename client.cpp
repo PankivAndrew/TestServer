@@ -15,7 +15,7 @@ int main(int argc, char*argv[]) {
     }
     memset(&server, 0, sizeof( server ));
     server . sin_family = AF_INET;
-    server .sin_port = htons(2233);
+    server .sin_port = htons(9099);
     if ( inet_aton(argv [1], &server.sin_addr) <= 0 ) {}
     int res = connect(sd, (const sockaddr *) &server, sizeof( server ));
     if( res == -1){

@@ -14,7 +14,7 @@ int main(int argc,char *argv[]) {
                 execv("client", &argv[2]);
             }
             default: {
-                printf("New client is created:%i\n", i);
+                printf("New client is created:%i\n", i + 1);
             }
         }
     }
