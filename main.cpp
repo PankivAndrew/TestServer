@@ -13,17 +13,13 @@ int main(int argc,char *argv[]) {
             case -1: {
                 int err = errno;
                 printf("Error: %s\n", strerror(err));
+                exit(EXIT_FAILURE);
             }
             case 0: {
                 execv("client", &argv[1]);
             }
-            default: {
-                printf("New client is created:%i\n", i + 1);
-            }
         }
     }
     wait(NULL);
-
-
     return 0;
 }
